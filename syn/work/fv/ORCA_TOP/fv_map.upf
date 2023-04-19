@@ -1,0 +1,354 @@
+########################################################################################
+#                                                                                      #
+# Created by Genus(TM) Synthesis Solution 19.12-s121_1 on Tue Apr 18 21:23:14 PDT 2023 #
+#                                                                                      #
+########################################################################################
+
+create_power_domain PD_ORCA_TOP \
+	 -include_scope
+
+create_power_domain PD_RISC_CORE \
+	 -elements I_RISC_CORE
+
+create_supply_net VSS \
+	 -domain PD_ORCA_TOP
+
+create_supply_net VDD \
+	 -domain PD_ORCA_TOP
+
+create_supply_net VDDH \
+	 -domain PD_ORCA_TOP
+
+set_domain_supply_net PD_ORCA_TOP \
+	 -primary_power_net VDD \
+	 -primary_ground_net VSS
+
+create_supply_port VDD \
+	 -domain PD_ORCA_TOP \
+	 -direction in
+
+create_supply_port VSS \
+	 -domain PD_ORCA_TOP \
+	 -direction in
+
+create_supply_port VDDH \
+	 -domain PD_ORCA_TOP \
+	 -direction in
+
+connect_supply_net VSS \
+	 -ports VSS
+
+connect_supply_net VDD \
+	 -ports VDD
+
+connect_supply_net VDDH \
+	 -ports VDDH
+
+create_supply_net VSS \
+	 -domain PD_RISC_CORE \
+	 -reuse
+
+create_supply_net VDD \
+	 -domain PD_RISC_CORE \
+	 -reuse
+
+create_supply_net VDDH \
+	 -domain PD_RISC_CORE \
+	 -reuse
+
+set_domain_supply_net PD_RISC_CORE \
+	 -primary_power_net VDDH \
+	 -primary_ground_net VSS
+
+set_level_shifter ls_in \
+	 -domain PD_RISC_CORE \
+	 -applies_to inputs \
+	 -rule low_to_high \
+	 -location self
+
+set_level_shifter ls_out \
+	 -domain PD_RISC_CORE \
+	 -applies_to outputs \
+	 -rule high_to_low \
+	 -location parent
+
+add_port_state VSS \
+	 -state { always 0.000000 }
+
+add_port_state VDD \
+	 -state { V0p75 0.750000 }
+
+add_port_state VDDH \
+	 -state { V0p75 0.750000 }
+
+add_port_state VDDH \
+	 -state { V0p95 0.950000 }
+
+add_port_state VDD \
+	 -state { V0p95 0.950000 }
+
+add_port_state VDDH \
+	 -state { V1p16 1.160000 }
+
+create_pst power_state \
+	 -supplies { VDD VDDH VSS }
+
+add_pst_state risc_high_worst \
+	 -pst power_state \
+	 -state { V0p75 V0p95 always }
+
+add_pst_state risc_low_worst \
+	 -pst power_state \
+	 -state { V0p75 V0p75 always }
+
+add_pst_state risc_high_best \
+	 -pst power_state \
+	 -state { V0p95 V1p16 always }
+
+add_pst_state risc_low_best \
+	 -pst power_state \
+	 -state { V0p95 V0p95 always }
+
+set_scope /
+
+connect_supply_net VDD -ports { \
+	  I_RISC_CORE/PD_RISC_CORE_ls_in_2_UPF_LS/VDDL \
+	  I_RISC_CORE/PD_RISC_CORE_ls_in_67_UPF_LS/VDDL \
+	  I_RISC_CORE/PD_RISC_CORE_ls_in_68_UPF_LS/VDDL \
+	  I_RISC_CORE/PD_RISC_CORE_ls_in_69_UPF_LS/VDDL \
+	  I_RISC_CORE/PD_RISC_CORE_ls_in_70_UPF_LS/VDDL \
+	  I_RISC_CORE/PD_RISC_CORE_ls_in_71_UPF_LS/VDDL \
+	  I_RISC_CORE/PD_RISC_CORE_ls_in_72_UPF_LS/VDDL \
+	  I_RISC_CORE/PD_RISC_CORE_ls_in_73_UPF_LS/VDDL \
+	  I_RISC_CORE/PD_RISC_CORE_ls_in_74_UPF_LS/VDDL \
+	  I_RISC_CORE/PD_RISC_CORE_ls_in_75_UPF_LS/VDDL \
+	  I_RISC_CORE/PD_RISC_CORE_ls_in_76_UPF_LS/VDDL \
+	  I_RISC_CORE/PD_RISC_CORE_ls_in_77_UPF_LS/VDDL \
+	  I_RISC_CORE/PD_RISC_CORE_ls_in_78_UPF_LS/VDDL \
+	  I_RISC_CORE/PD_RISC_CORE_ls_in_79_UPF_LS/VDDL \
+	  I_RISC_CORE/PD_RISC_CORE_ls_in_80_UPF_LS/VDDL \
+	  I_RISC_CORE/PD_RISC_CORE_ls_in_81_UPF_LS/VDDL \
+	  I_RISC_CORE/PD_RISC_CORE_ls_in_82_UPF_LS/VDDL \
+	  I_RISC_CORE/PD_RISC_CORE_ls_in_83_UPF_LS/VDDL \
+	  I_RISC_CORE/PD_RISC_CORE_ls_in_84_UPF_LS/VDDL \
+	  I_RISC_CORE/PD_RISC_CORE_ls_in_85_UPF_LS/VDDL \
+	  I_RISC_CORE/PD_RISC_CORE_ls_in_86_UPF_LS/VDDL \
+	  I_RISC_CORE/PD_RISC_CORE_ls_in_87_UPF_LS/VDDL \
+	  I_RISC_CORE/PD_RISC_CORE_ls_in_88_UPF_LS/VDDL \
+	  I_RISC_CORE/PD_RISC_CORE_ls_in_89_UPF_LS/VDDL \
+	  I_RISC_CORE/PD_RISC_CORE_ls_in_90_UPF_LS/VDDL \
+	  I_RISC_CORE/PD_RISC_CORE_ls_in_91_UPF_LS/VDDL \
+	  I_RISC_CORE/PD_RISC_CORE_ls_in_92_UPF_LS/VDDL \
+	  I_RISC_CORE/PD_RISC_CORE_ls_in_93_UPF_LS/VDDL \
+	  I_RISC_CORE/PD_RISC_CORE_ls_in_94_UPF_LS/VDDL \
+	  I_RISC_CORE/PD_RISC_CORE_ls_in_95_UPF_LS/VDDL \
+	  I_RISC_CORE/PD_RISC_CORE_ls_in_96_UPF_LS/VDDL \
+	  I_RISC_CORE/PD_RISC_CORE_ls_in_97_UPF_LS/VDDL \
+	  I_RISC_CORE/PD_RISC_CORE_ls_in_98_UPF_LS/VDDL \
+	  I_RISC_CORE/PD_RISC_CORE_ls_in_99_UPF_LS/VDDL \
+	}
+
+set_scope /
+
+connect_supply_net VDD -ports { \
+	  PD_RISC_CORE_ls_out_10_UPF_LS/VDDL \
+	  PD_RISC_CORE_ls_out_11_UPF_LS/VDDL \
+	  PD_RISC_CORE_ls_out_12_UPF_LS/VDDL \
+	  PD_RISC_CORE_ls_out_13_UPF_LS/VDDL \
+	  PD_RISC_CORE_ls_out_14_UPF_LS/VDDL \
+	  PD_RISC_CORE_ls_out_15_UPF_LS/VDDL \
+	  PD_RISC_CORE_ls_out_16_UPF_LS/VDDL \
+	  PD_RISC_CORE_ls_out_17_UPF_LS/VDDL \
+	  PD_RISC_CORE_ls_out_18_UPF_LS/VDDL \
+	  PD_RISC_CORE_ls_out_19_UPF_LS/VDDL \
+	  PD_RISC_CORE_ls_out_20_UPF_LS/VDDL \
+	  PD_RISC_CORE_ls_out_21_UPF_LS/VDDL \
+	  PD_RISC_CORE_ls_out_22_UPF_LS/VDDL \
+	  PD_RISC_CORE_ls_out_23_UPF_LS/VDDL \
+	  PD_RISC_CORE_ls_out_24_UPF_LS/VDDL \
+	  PD_RISC_CORE_ls_out_25_UPF_LS/VDDL \
+	  PD_RISC_CORE_ls_out_26_UPF_LS/VDDL \
+	  PD_RISC_CORE_ls_out_27_UPF_LS/VDDL \
+	  PD_RISC_CORE_ls_out_28_UPF_LS/VDDL \
+	  PD_RISC_CORE_ls_out_29_UPF_LS/VDDL \
+	  PD_RISC_CORE_ls_out_30_UPF_LS/VDDL \
+	  PD_RISC_CORE_ls_out_31_UPF_LS/VDDL \
+	  PD_RISC_CORE_ls_out_32_UPF_LS/VDDL \
+	  PD_RISC_CORE_ls_out_33_UPF_LS/VDDL \
+	  PD_RISC_CORE_ls_out_34_UPF_LS/VDDL \
+	  PD_RISC_CORE_ls_out_35_UPF_LS/VDDL \
+	  PD_RISC_CORE_ls_out_36_UPF_LS/VDDL \
+	  PD_RISC_CORE_ls_out_37_UPF_LS/VDDL \
+	  PD_RISC_CORE_ls_out_38_UPF_LS/VDDL \
+	  PD_RISC_CORE_ls_out_39_UPF_LS/VDDL \
+	  PD_RISC_CORE_ls_out_3_UPF_LS/VDDL \
+	  PD_RISC_CORE_ls_out_40_UPF_LS/VDDL \
+	  PD_RISC_CORE_ls_out_41_UPF_LS/VDDL \
+	  PD_RISC_CORE_ls_out_42_UPF_LS/VDDL \
+	  PD_RISC_CORE_ls_out_43_UPF_LS/VDDL \
+	  PD_RISC_CORE_ls_out_44_UPF_LS/VDDL \
+	  PD_RISC_CORE_ls_out_45_UPF_LS/VDDL \
+	  PD_RISC_CORE_ls_out_46_UPF_LS/VDDL \
+	  PD_RISC_CORE_ls_out_47_UPF_LS/VDDL \
+	  PD_RISC_CORE_ls_out_48_UPF_LS/VDDL \
+	  PD_RISC_CORE_ls_out_49_UPF_LS/VDDL \
+	  PD_RISC_CORE_ls_out_4_UPF_LS/VDDL \
+	  PD_RISC_CORE_ls_out_50_UPF_LS/VDDL \
+	  PD_RISC_CORE_ls_out_51_UPF_LS/VDDL \
+	  PD_RISC_CORE_ls_out_52_UPF_LS/VDDL \
+	  PD_RISC_CORE_ls_out_53_UPF_LS/VDDL \
+	  PD_RISC_CORE_ls_out_54_UPF_LS/VDDL \
+	  PD_RISC_CORE_ls_out_55_UPF_LS/VDDL \
+	  PD_RISC_CORE_ls_out_56_UPF_LS/VDDL \
+	  PD_RISC_CORE_ls_out_57_UPF_LS/VDDL \
+	  PD_RISC_CORE_ls_out_58_UPF_LS/VDDL \
+	  PD_RISC_CORE_ls_out_59_UPF_LS/VDDL \
+	  PD_RISC_CORE_ls_out_5_UPF_LS/VDDL \
+	  PD_RISC_CORE_ls_out_60_UPF_LS/VDDL \
+	  PD_RISC_CORE_ls_out_61_UPF_LS/VDDL \
+	  PD_RISC_CORE_ls_out_62_UPF_LS/VDDL \
+	  PD_RISC_CORE_ls_out_63_UPF_LS/VDDL \
+	  PD_RISC_CORE_ls_out_64_UPF_LS/VDDL \
+	  PD_RISC_CORE_ls_out_65_UPF_LS/VDDL \
+	  PD_RISC_CORE_ls_out_66_UPF_LS/VDDL \
+	  PD_RISC_CORE_ls_out_7_UPF_LS/VDDL \
+	  PD_RISC_CORE_ls_out_8_UPF_LS/VDDL \
+	  PD_RISC_CORE_ls_out_9_UPF_LS/VDDL \
+	}
+
+connect_supply_net VSS -ports { \
+	  I_RISC_CORE/PD_RISC_CORE_ls_in_2_UPF_LS/VSS \
+	  I_RISC_CORE/PD_RISC_CORE_ls_in_67_UPF_LS/VSS \
+	  I_RISC_CORE/PD_RISC_CORE_ls_in_68_UPF_LS/VSS \
+	  I_RISC_CORE/PD_RISC_CORE_ls_in_69_UPF_LS/VSS \
+	  I_RISC_CORE/PD_RISC_CORE_ls_in_70_UPF_LS/VSS \
+	  I_RISC_CORE/PD_RISC_CORE_ls_in_71_UPF_LS/VSS \
+	  I_RISC_CORE/PD_RISC_CORE_ls_in_72_UPF_LS/VSS \
+	  I_RISC_CORE/PD_RISC_CORE_ls_in_73_UPF_LS/VSS \
+	  I_RISC_CORE/PD_RISC_CORE_ls_in_74_UPF_LS/VSS \
+	  I_RISC_CORE/PD_RISC_CORE_ls_in_75_UPF_LS/VSS \
+	  I_RISC_CORE/PD_RISC_CORE_ls_in_76_UPF_LS/VSS \
+	  I_RISC_CORE/PD_RISC_CORE_ls_in_77_UPF_LS/VSS \
+	  I_RISC_CORE/PD_RISC_CORE_ls_in_78_UPF_LS/VSS \
+	  I_RISC_CORE/PD_RISC_CORE_ls_in_79_UPF_LS/VSS \
+	  I_RISC_CORE/PD_RISC_CORE_ls_in_80_UPF_LS/VSS \
+	  I_RISC_CORE/PD_RISC_CORE_ls_in_81_UPF_LS/VSS \
+	  I_RISC_CORE/PD_RISC_CORE_ls_in_82_UPF_LS/VSS \
+	  I_RISC_CORE/PD_RISC_CORE_ls_in_83_UPF_LS/VSS \
+	  I_RISC_CORE/PD_RISC_CORE_ls_in_84_UPF_LS/VSS \
+	  I_RISC_CORE/PD_RISC_CORE_ls_in_85_UPF_LS/VSS \
+	  I_RISC_CORE/PD_RISC_CORE_ls_in_86_UPF_LS/VSS \
+	  I_RISC_CORE/PD_RISC_CORE_ls_in_87_UPF_LS/VSS \
+	  I_RISC_CORE/PD_RISC_CORE_ls_in_88_UPF_LS/VSS \
+	  I_RISC_CORE/PD_RISC_CORE_ls_in_89_UPF_LS/VSS \
+	  I_RISC_CORE/PD_RISC_CORE_ls_in_90_UPF_LS/VSS \
+	  I_RISC_CORE/PD_RISC_CORE_ls_in_91_UPF_LS/VSS \
+	  I_RISC_CORE/PD_RISC_CORE_ls_in_92_UPF_LS/VSS \
+	  I_RISC_CORE/PD_RISC_CORE_ls_in_93_UPF_LS/VSS \
+	  I_RISC_CORE/PD_RISC_CORE_ls_in_94_UPF_LS/VSS \
+	  I_RISC_CORE/PD_RISC_CORE_ls_in_95_UPF_LS/VSS \
+	  I_RISC_CORE/PD_RISC_CORE_ls_in_96_UPF_LS/VSS \
+	  I_RISC_CORE/PD_RISC_CORE_ls_in_97_UPF_LS/VSS \
+	  I_RISC_CORE/PD_RISC_CORE_ls_in_98_UPF_LS/VSS \
+	  I_RISC_CORE/PD_RISC_CORE_ls_in_99_UPF_LS/VSS \
+	  PD_RISC_CORE_ls_out_10_UPF_LS/VSS \
+	  PD_RISC_CORE_ls_out_11_UPF_LS/VSS \
+	  PD_RISC_CORE_ls_out_12_UPF_LS/VSS \
+	  PD_RISC_CORE_ls_out_13_UPF_LS/VSS \
+	  PD_RISC_CORE_ls_out_14_UPF_LS/VSS \
+	  PD_RISC_CORE_ls_out_15_UPF_LS/VSS \
+	  PD_RISC_CORE_ls_out_16_UPF_LS/VSS \
+	  PD_RISC_CORE_ls_out_17_UPF_LS/VSS \
+	  PD_RISC_CORE_ls_out_18_UPF_LS/VSS \
+	  PD_RISC_CORE_ls_out_19_UPF_LS/VSS \
+	  PD_RISC_CORE_ls_out_20_UPF_LS/VSS \
+	  PD_RISC_CORE_ls_out_21_UPF_LS/VSS \
+	  PD_RISC_CORE_ls_out_22_UPF_LS/VSS \
+	  PD_RISC_CORE_ls_out_23_UPF_LS/VSS \
+	  PD_RISC_CORE_ls_out_24_UPF_LS/VSS \
+	  PD_RISC_CORE_ls_out_25_UPF_LS/VSS \
+	  PD_RISC_CORE_ls_out_26_UPF_LS/VSS \
+	  PD_RISC_CORE_ls_out_27_UPF_LS/VSS \
+	  PD_RISC_CORE_ls_out_28_UPF_LS/VSS \
+	  PD_RISC_CORE_ls_out_29_UPF_LS/VSS \
+	  PD_RISC_CORE_ls_out_30_UPF_LS/VSS \
+	  PD_RISC_CORE_ls_out_31_UPF_LS/VSS \
+	  PD_RISC_CORE_ls_out_32_UPF_LS/VSS \
+	  PD_RISC_CORE_ls_out_33_UPF_LS/VSS \
+	  PD_RISC_CORE_ls_out_34_UPF_LS/VSS \
+	  PD_RISC_CORE_ls_out_35_UPF_LS/VSS \
+	  PD_RISC_CORE_ls_out_36_UPF_LS/VSS \
+	  PD_RISC_CORE_ls_out_37_UPF_LS/VSS \
+	  PD_RISC_CORE_ls_out_38_UPF_LS/VSS \
+	  PD_RISC_CORE_ls_out_39_UPF_LS/VSS \
+	  PD_RISC_CORE_ls_out_3_UPF_LS/VSS \
+	  PD_RISC_CORE_ls_out_40_UPF_LS/VSS \
+	  PD_RISC_CORE_ls_out_41_UPF_LS/VSS \
+	  PD_RISC_CORE_ls_out_42_UPF_LS/VSS \
+	  PD_RISC_CORE_ls_out_43_UPF_LS/VSS \
+	  PD_RISC_CORE_ls_out_44_UPF_LS/VSS \
+	  PD_RISC_CORE_ls_out_45_UPF_LS/VSS \
+	  PD_RISC_CORE_ls_out_46_UPF_LS/VSS \
+	  PD_RISC_CORE_ls_out_47_UPF_LS/VSS \
+	  PD_RISC_CORE_ls_out_48_UPF_LS/VSS \
+	  PD_RISC_CORE_ls_out_49_UPF_LS/VSS \
+	  PD_RISC_CORE_ls_out_4_UPF_LS/VSS \
+	  PD_RISC_CORE_ls_out_50_UPF_LS/VSS \
+	  PD_RISC_CORE_ls_out_51_UPF_LS/VSS \
+	  PD_RISC_CORE_ls_out_52_UPF_LS/VSS \
+	  PD_RISC_CORE_ls_out_53_UPF_LS/VSS \
+	  PD_RISC_CORE_ls_out_54_UPF_LS/VSS \
+	  PD_RISC_CORE_ls_out_55_UPF_LS/VSS \
+	  PD_RISC_CORE_ls_out_56_UPF_LS/VSS \
+	  PD_RISC_CORE_ls_out_57_UPF_LS/VSS \
+	  PD_RISC_CORE_ls_out_58_UPF_LS/VSS \
+	  PD_RISC_CORE_ls_out_59_UPF_LS/VSS \
+	  PD_RISC_CORE_ls_out_5_UPF_LS/VSS \
+	  PD_RISC_CORE_ls_out_60_UPF_LS/VSS \
+	  PD_RISC_CORE_ls_out_61_UPF_LS/VSS \
+	  PD_RISC_CORE_ls_out_62_UPF_LS/VSS \
+	  PD_RISC_CORE_ls_out_63_UPF_LS/VSS \
+	  PD_RISC_CORE_ls_out_64_UPF_LS/VSS \
+	  PD_RISC_CORE_ls_out_65_UPF_LS/VSS \
+	  PD_RISC_CORE_ls_out_66_UPF_LS/VSS \
+	  PD_RISC_CORE_ls_out_7_UPF_LS/VSS \
+	  PD_RISC_CORE_ls_out_8_UPF_LS/VSS \
+	  PD_RISC_CORE_ls_out_9_UPF_LS/VSS \
+	}
+
+connect_supply_net VDDH -ports { \
+	  I_RISC_CORE/PD_RISC_CORE_ls_in_2_UPF_LS/VDDH \
+	  I_RISC_CORE/PD_RISC_CORE_ls_in_67_UPF_LS/VDDH \
+	  I_RISC_CORE/PD_RISC_CORE_ls_in_68_UPF_LS/VDDH \
+	  I_RISC_CORE/PD_RISC_CORE_ls_in_69_UPF_LS/VDDH \
+	  I_RISC_CORE/PD_RISC_CORE_ls_in_70_UPF_LS/VDDH \
+	  I_RISC_CORE/PD_RISC_CORE_ls_in_71_UPF_LS/VDDH \
+	  I_RISC_CORE/PD_RISC_CORE_ls_in_72_UPF_LS/VDDH \
+	  I_RISC_CORE/PD_RISC_CORE_ls_in_73_UPF_LS/VDDH \
+	  I_RISC_CORE/PD_RISC_CORE_ls_in_74_UPF_LS/VDDH \
+	  I_RISC_CORE/PD_RISC_CORE_ls_in_75_UPF_LS/VDDH \
+	  I_RISC_CORE/PD_RISC_CORE_ls_in_76_UPF_LS/VDDH \
+	  I_RISC_CORE/PD_RISC_CORE_ls_in_77_UPF_LS/VDDH \
+	  I_RISC_CORE/PD_RISC_CORE_ls_in_78_UPF_LS/VDDH \
+	  I_RISC_CORE/PD_RISC_CORE_ls_in_79_UPF_LS/VDDH \
+	  I_RISC_CORE/PD_RISC_CORE_ls_in_80_UPF_LS/VDDH \
+	  I_RISC_CORE/PD_RISC_CORE_ls_in_81_UPF_LS/VDDH \
+	  I_RISC_CORE/PD_RISC_CORE_ls_in_82_UPF_LS/VDDH \
+	  I_RISC_CORE/PD_RISC_CORE_ls_in_83_UPF_LS/VDDH \
+	  I_RISC_CORE/PD_RISC_CORE_ls_in_84_UPF_LS/VDDH \
+	  I_RISC_CORE/PD_RISC_CORE_ls_in_85_UPF_LS/VDDH \
+	  I_RISC_CORE/PD_RISC_CORE_ls_in_86_UPF_LS/VDDH \
+	  I_RISC_CORE/PD_RISC_CORE_ls_in_87_UPF_LS/VDDH \
+	  I_RISC_CORE/PD_RISC_CORE_ls_in_88_UPF_LS/VDDH \
+	  I_RISC_CORE/PD_RISC_CORE_ls_in_89_UPF_LS/VDDH \
+	  I_RISC_CORE/PD_RISC_CORE_ls_in_90_UPF_LS/VDDH \
+	  I_RISC_CORE/PD_RISC_CORE_ls_in_91_UPF_LS/VDDH \
+	  I_RISC_CORE/PD_RISC_CORE_ls_in_92_UPF_LS/VDDH \
+	  I_RISC_CORE/PD_RISC_CORE_ls_in_93_UPF_LS/VDDH \
+	  I_RISC_CORE/PD_RISC_CORE_ls_in_94_UPF_LS/VDDH \
+	  I_RISC_CORE/PD_RISC_CORE_ls_in_95_UPF_LS/VDDH \
+	  I_RISC_CORE/PD_RISC_CORE_ls_in_96_UPF_LS/VDDH \
+	  I_RISC_CORE/PD_RISC_CORE_ls_in_97_UPF_LS/VDDH \
+	  I_RISC_CORE/PD_RISC_CORE_ls_in_98_UPF_LS/VDDH \
+	  I_RISC_CORE/PD_RISC_CORE_ls_in_99_UPF_LS/VDDH \
+	}
