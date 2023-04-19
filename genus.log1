@@ -1,0 +1,93 @@
+Cadence Genus(TM) Synthesis Solution.
+Copyright 2019 Cadence Design Systems, Inc. All rights reserved worldwide.
+Cadence and the Cadence logo are registered trademarks and Genus is a trademark
+of Cadence Design Systems, Inc. in the United States and other countries.
+
+Version: 19.12-s121_1, built Tue Dec 03 15:07:17 PST 2019
+Options: 
+Date:    Tue Apr 18 21:10:08 2023
+Host:    auto.ece.pdx.edu (x86_64 w/Linux 3.10.0-1160.88.1.el7.x86_64) (1core*60cpus*60physical cpus*Intel Xeon E312xx (Sandy Bridge, IBRS update) 16384KB) (87473212KB)
+PID:     36011
+OS:      CentOS Linux release 7.9.2009 (Core)
+
+Checking out license: Genus_Synthesis
+
+Loading tool scripts...
+
+Finished loading tool scripts (7 seconds elapsed).
+
+WARNING: This version of the tool is 1232 days old.
+@genus:root: 1> 
+@genus:root: 1> 
+@genus:root: 1> o
+ambiguous command name "o": open optimize_iso_ls
+@genus:root: 2> 
+@genus:root: 2> 
+@genus:root: 2> set top_design ORCA_TOP
+ORCA_TOP
+@genus:root: 3> o
+ambiguous command name "o": open optimize_iso_ls
+@genus:root: 4> 
+@genus:root: 4> 
+@genus:root: 4> source ../scripts/genus.tcl
+File '../scripts/genus.tcl' does not exist.
+@genus:root: 5> 
+@genus:root: 5> 
+@genus:root: 5> 
+@genus:root: 5> pwd
+/u/ekke/lab2-karthikekke
+@genus:root: 6> 
+@genus:root: 6> 
+@genus:root: 6> ls
+BLENDER_0.design_config.tcl
+BLENDER_0.design_options.tcl
+BLENDER_1.design_config.tcl
+BLENDER_1.design_options.tcl
+CLOCKING.design_config.tcl
+CLOCKING.design_options.tcl
+CONTEXT_MEM.design_config.tcl
+CONTEXT_MEM.design_options.tcl
+ExampleRocketSystem.design_config.tcl
+ExampleRocketSystem.design_options.tcl
+ORCA_TOP.design_config.tcl
+ORCA_TOP.design_options.tcl
+ORCA_TOP.dft_config.tcl
+ORCA_TOP.macro_placement_innovus.tcl
+ORCA_TOP.prefloorplan-macros2.tcl
+ORCA_TOP.reg_eco.tcl
+PARSER.design_config.tcl
+PARSER.design_options.tcl
+PCI_TOP.design_config.tcl
+PCI_TOP.design_options.tcl
+README
+README.git
+README.md
+RISC_CORE.design_config.tcl
+RISC_CORE.design_options.tcl
+SDRAM_TOP.design_config.tcl
+SDRAM_TOP.design_options.tcl
+apr
+cadence_cap_tech
+constraints
+design_options_fp.tcl
+fifo1.add_ios.tcl
+fifo1.design_config.tcl
+fifo1.design_options.tcl
+fifo1_sram.add_ios.tcl
+fifo1_sram.design_config.tcl
+fifo1_sram.design_options.tcl
+fifo1_sram.design_options_innovus.tcl
+fifo1_sram.dft_config.tcl
+fifo1_sram.dft_eco.tcl
+genus.cmd
+genus.cmd1
+genus.log
+genus.log1
+pt
+simple_and.design_config.tcl
+syn
+@genus:root: 7> 
+@genus:root: 7> 
+@genus:root: 7> 
+@genus:root: 7> exit
+Normal exit.
